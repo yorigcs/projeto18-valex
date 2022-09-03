@@ -25,8 +25,8 @@ export interface Card {
 export type CardInsertData = Omit<Card, 'id'>
 export type CardUpdateData = Partial<Card>
 
-export async function find (): Promise<Card []> {
-  const result = await connection.query<Card>('SELECT * FROM cards')
+export async function findCardsByEmployeeId (employeeId: number): Promise<Card []> {
+  const result = await connection.query<Card, [number]>('SELECT * FROM cards WHERE "employeeId"= $1', [employeeId])
   return result.rows
 }
 
