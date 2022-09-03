@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import { ParamsDictionary } from 'express-serve-static-core'
-import schemaHandler from '../utils/schemaHandle'
-import { createCardSchema } from '../schemas'
+import { createCardSchema, schemaHandler } from '../schemas'
 import { createCardService } from '../services/createCardService'
 import { NotFound, Unauthorized, BadRequest, InternalError } from '../errors'
 import { TransactionTypes } from '../repositories/cardRepository'
