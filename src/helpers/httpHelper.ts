@@ -32,3 +32,16 @@ export const created = (data: any): HttpResponse => (
     body: data
   }
 )
+export const ok = (data: any): HttpResponse => (
+  {
+    statusCode: 200,
+    body: data
+  }
+)
+
+export const unprocessableEntity = (data: any): HttpResponse => (
+  {
+    statusCode: 422,
+    body: data
+  }
+)
