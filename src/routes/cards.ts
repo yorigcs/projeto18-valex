@@ -6,5 +6,5 @@ routeCards.post('/createCard/:employeeId', createCardController)
 
 routeCards.post('/activateCard/:employeeId', activateCardController)
 
-routeCards.get('/cardHistory/:employeeId/:cardId/:cvc', cardHistoryController)
+routeCards.get('/cardHistory/:cardId/:cvc', cardHistoryController)
 export { routeCards }

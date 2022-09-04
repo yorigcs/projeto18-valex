@@ -15,6 +15,5 @@ export const activateCardSchema = joi.object({
 
 export const cardHistorySchema = joi.object({
   cvc: joi.string().pattern(/^[0-9]*$/).required(),
-  employeeId: joi.number().integer().required(),
   cardId: joi.number().integer().required()
 }).strict()
