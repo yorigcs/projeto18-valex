@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 export const generateExpDate = (): string => {
   const expYear = new Date().getFullYear() + 5
   const year = String(expYear)[2] + String(expYear)[3]
@@ -19,4 +20,8 @@ export const isValidDate = (date: string): boolean => {
   if (year === expYear && month > expMonth) return false
 
   return true
+}
+
+export const formatDate = (date: string): string => {
+  return dayjs(date).format('DD/MM/YYYY')
 }
