@@ -5,7 +5,7 @@ import { findById, cardBalance } from '../repositories/cardRepository'
 import { isValidDate } from '../utils/generateDate'
 import { compareHashPassword } from '../utils/passwordHandler'
 import { findById as findBusinesseById } from '../repositories/businessRepository'
-
+import { PaymentInsertData, insert } from '../repositories/paymentRepository'
 export const purchaseService = async (businessId: number, cardId: number, password: string, purchaseAmount: number): Promise<HttpResponse> => {
   try {
     const card = await findById(cardId)
@@ -25,10 +25,19 @@ export const purchaseService = async (businessId: number, cardId: number, passwo
 
     if (card.type !== businesses.type) return unauthorized(new InvalidParamError('This card is not allowed to buy in this establishment'))
 
-    const amount = await cardBalance(cardId)
-    if (purchaseAmount > amount.balance) return unauthorized(new InvalidParamError('You dont have enough money to purchase'))
+    const balance = await cardBalance(cardId)
+    const balanceAmount = balance.rechargeBalance - balance.paymentBalance
 
-    return ok('ok')
+    if (purchaseAmount > balanceAmount) return unauthorized(new InvalidParamError('You dont have enough money to purchase'))
+
+    const purchase: PaymentInsertData = {
+      cardId,
+      businessId,
+      amount: purchaseAmount
+    }
+    await insert(purchase)
+
+    return ok('The purchase was successfull')
   } catch (err) {
     return serverError()
   }

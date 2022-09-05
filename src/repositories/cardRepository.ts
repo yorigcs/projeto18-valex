@@ -124,15 +124,17 @@ export async function remove (id: number): Promise<void> {
 }
 
 interface Balance {
-  balance: number
+  paymentBalance: number
+  rechargeBalance: number
 }
 export async function cardBalance (cardId: number): Promise<Balance> {
-  const result = await connection.query<Balance, [number]>(`
-  SELECT (sum(r.amount) - sum(p.amount)) as balance
-  from payments p 
-  join recharges r 
-  on p."cardId" = r."cardId" 
-  and p."cardId" = $1`, [cardId])
+  const result = await connection.query<Balance, [number]>(
+  `
+  SELECT  SUM(p.amount ) AS "paymentBalance", 
+  (SELECT SUM(r.amount) FROM recharges r WHERE r."cardId"= $1) AS "rechargeBalance"
+  FROM payments p 
+  WHERE p."cardId" = $1
+`, [cardId])
 
   return result.rows[0]
 }
