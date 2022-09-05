@@ -122,3 +122,17 @@ export async function update (id: number, cardData: CardUpdateData): Promise<voi
 export async function remove (id: number): Promise<void> {
   await connection.query<any, [number]>('DELETE FROM cards WHERE id=$1', [id])
 }
+
+interface Balance {
+  balance: number
+}
+export async function cardBalance (cardId: number): Promise<Balance> {
+  const result = await connection.query<Balance, [number]>(`
+  SELECT (sum(r.amount) - sum(p.amount)) as balance
+  from payments p 
+  join recharges r 
+  on p."cardId" = r."cardId" 
+  and p."cardId" = $1`, [cardId])
+
+  return result.rows[0]
+}
