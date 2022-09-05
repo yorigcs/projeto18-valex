@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { schemaHandler, cardActionSchema } from '../schemas'
+import { cardActionService } from '../services'
 
 export const cardActionController = (req: Request, res: Response): Response<any, Record<string, any>> => {
   const cardId = parseInt(req.params.cardId)
@@ -9,5 +10,9 @@ export const cardActionController = (req: Request, res: Response): Response<any,
   if (schema) {
     return res.status(schema.statusCode).send(schema.body)
   }
-  res.send('ok')
+  const handleService = async (): Promise<any> => {
+    const resp = await cardActionService()
+    return res.status(resp.statusCode).send(resp.body)
+  }
+  void handleService()
 }
