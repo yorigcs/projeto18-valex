@@ -17,3 +17,9 @@ export const cardHistorySchema = joi.object({
   cvc: joi.string().pattern(/^[0-9]*$/).required(),
   cardId: joi.number().integer().required()
 }).strict()
+
+export const cardActionSchema = joi.object({
+  action: joi.string().valid('block', 'unblock').required(),
+  cardId: joi.number().integer().required(),
+  password: joi.string().pattern(/^[0-9]*$/).required()
+}).strict()
