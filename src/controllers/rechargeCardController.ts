@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { rechargeCardSchema, schemaHandler } from '../schemas'
 import { rechargeCardService } from '../services'
 
-export const rechargeCardController = (req: Request, res: Response): any => {
+export const rechargeCardController = (req: Request, res: Response): Response<any, Record<string, any>> => {
   const ApiKey = req.header('x-api-key')
   const employeeId = parseInt(req.params.employeeId)
   const cardId = parseInt(req.params.cardId)
