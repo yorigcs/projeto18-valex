@@ -11,6 +11,8 @@ export const purchaseService = async (businessId: number, cardId: number, passwo
 
     if (card.isBlocked) return unauthorized(new InvalidParamError('This card is blocked'))
 
+    if (!card.password) return unauthorized(new InvalidParamError('This card is not activated'))
+
     if (!isValidDate(card.expirationDate)) return unauthorized(new InvalidParamError('This card expired'))
 
     return ok('ok')
