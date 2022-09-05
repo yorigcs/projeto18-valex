@@ -4,6 +4,7 @@ import { HttpResponse } from '../protocols'
 import { findById } from '../repositories/cardRepository'
 import { isValidDate } from '../utils/generateDate'
 import { compareHashPassword } from '../utils/passwordHandler'
+import { findById as findBusinesseById } from '../repositories/businessRepository'
 
 export const purchaseService = async (businessId: number, cardId: number, password: string, purchaseAmount: number): Promise<HttpResponse> => {
   try {
@@ -18,6 +19,9 @@ export const purchaseService = async (businessId: number, cardId: number, passwo
 
     const isValidPassword = compareHashPassword(password, card.password)
     if (!isValidPassword) return unauthorized(new InvalidParamError('This password is incorrect'))
+
+    const businesses = await findBusinesseById(businessId)
+    if (!businesses) return notFound(new InvalidParamError('This business does not exist'))
 
     return ok('ok')
   } catch (err) {
