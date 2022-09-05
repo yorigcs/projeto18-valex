@@ -23,6 +23,8 @@ export const purchaseService = async (businessId: number, cardId: number, passwo
     const businesses = await findBusinesseById(businessId)
     if (!businesses) return notFound(new InvalidParamError('This business does not exist'))
 
+    if (card.type !== businesses.type) return unauthorized(new InvalidParamError('This card is not allowed to buy in this establishment'))
+
     return ok('ok')
   } catch (err) {
     return serverError()
