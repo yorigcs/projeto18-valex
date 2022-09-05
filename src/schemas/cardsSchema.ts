@@ -30,3 +30,10 @@ export const rechargeCardSchema = joi.object({
   employeeId: joi.number().integer().required(),
   rechargeAmount: joi.number().min(1).required()
 }).strict()
+
+export const purchaseSchema = joi.object({
+  businessId: joi.number().integer().required(),
+  cardId: joi.number().integer().required(),
+  password: joi.string().pattern(/^[0-9]*$/).required(),
+  purchaseAmount: joi.number().min(1).required()
+}).strict()
