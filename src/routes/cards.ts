@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { createCardController, activateCardController, cardHistoryController, cardActionController, rechargeCardController } from '../controllers'
+import { createCardController, activateCardController, cardHistoryController, cardActionController, rechargeCardController, purchaseController } from '../controllers'
 const routeCards = Router()
 
 routeCards.post('/createCard/:employeeId', createCardController)
@@ -11,4 +11,6 @@ routeCards.get('/cardHistory/:cardId/:cvc', cardHistoryController)
 routeCards.patch('/cardAction/:cardId/:action', cardActionController)
 
 routeCards.post('/rechargeCard/:employeeId/:cardId', rechargeCardController)
+
+routeCards.post('/purchase/:businessId/:cardId', purchaseController)
 export { routeCards }
