@@ -28,5 +28,5 @@ export const rechargeCardSchema = joi.object({
   ApiKey: joi.string().required(),
   cardId: joi.number().integer().required(),
   employeeId: joi.number().integer().required(),
-  rechargeAmount: joi.number().required()
+  rechargeAmount: joi.number().min(1).required()
 }).strict()
