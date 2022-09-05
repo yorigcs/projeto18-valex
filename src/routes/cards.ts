@@ -4,7 +4,7 @@ const routeCards = Router()
 
 routeCards.post('/createCard/:employeeId', createCardController)
 
-routeCards.post('/activateCard/:employeeId', activateCardController)
+routeCards.patch('/activateCard/:cardId', activateCardController)
 
 routeCards.get('/cardHistory/:cardId/:cvc', cardHistoryController)
 

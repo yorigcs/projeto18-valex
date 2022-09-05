@@ -10,14 +10,14 @@ interface Card {
 
 export const activateCardController = (req: Request<ParamsDictionary, any, Card>, res: Response): Response<any, Record<string, any>> => {
   const { cvc, password } = req.body
-  const employeeId = parseInt(req.params.employeeId)
+  const cardId = parseInt(req.params.cardId)
 
-  const schema = schemaHandler(activateCardSchema, { cvc, employeeId, password })
+  const schema = schemaHandler(activateCardSchema, { cvc, cardId, password })
   if (schema) {
     return res.status(schema.statusCode).send(schema.body)
   }
   const handleService = async (): Promise<any> => {
-    const resp = await activateCardService(cvc, employeeId, password)
+    const resp = await activateCardService(cvc, cardId, password)
     return res.status(resp.statusCode).send(resp.body)
   }
   void handleService()

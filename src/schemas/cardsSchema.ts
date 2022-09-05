@@ -9,7 +9,7 @@ export const createCardSchema = joi.object({
 
 export const activateCardSchema = joi.object({
   cvc: joi.string().pattern(/^[0-9]*$/).required(),
-  employeeId: joi.number().integer().required(),
+  cardId: joi.number().integer().required(),
   password: joi.string().pattern(/^[0-9]*$/).required()
 }).strict()
 
