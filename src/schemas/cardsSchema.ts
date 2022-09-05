@@ -23,3 +23,10 @@ export const cardActionSchema = joi.object({
   cardId: joi.number().integer().required(),
   password: joi.string().pattern(/^[0-9]*$/).required()
 }).strict()
+
+export const rechargeCardSchema = joi.object({
+  ApiKey: joi.string().required(),
+  cardId: joi.number().integer().required(),
+  employeeId: joi.number().integer().required(),
+  rechargeAmount: joi.number().required()
+}).strict()
