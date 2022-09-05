@@ -11,7 +11,7 @@ export const cardActionController = (req: Request, res: Response): Response<any,
     return res.status(schema.statusCode).send(schema.body)
   }
   const handleService = async (): Promise<any> => {
-    const resp = await cardActionService()
+    const resp = await cardActionService(cardId, action, password)
     return res.status(resp.statusCode).send(resp.body)
   }
   void handleService()
