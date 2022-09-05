@@ -1,7 +1,7 @@
 import { InvalidParamError } from '../errors'
 import { notFound, ok, serverError, unauthorized } from '../helpers/httpHelper'
 import { HttpResponse } from '../protocols'
-import { findById } from '../repositories/cardRepository'
+import { findById, cardBalance } from '../repositories/cardRepository'
 import { isValidDate } from '../utils/generateDate'
 import { compareHashPassword } from '../utils/passwordHandler'
 import { findById as findBusinesseById } from '../repositories/businessRepository'
@@ -24,6 +24,9 @@ export const purchaseService = async (businessId: number, cardId: number, passwo
     if (!businesses) return notFound(new InvalidParamError('This business does not exist'))
 
     if (card.type !== businesses.type) return unauthorized(new InvalidParamError('This card is not allowed to buy in this establishment'))
+
+    const amount = await cardBalance(cardId)
+    if (purchaseAmount > amount.balance) return unauthorized(new InvalidParamError('You dont have enough money to purchase'))
 
     return ok('ok')
   } catch (err) {
