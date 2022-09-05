@@ -1,8 +1,8 @@
 export class InvalidParamError extends Error {
-  message: string
+  readonly error: string
   constructor (paramName: string) {
     super(`Invalid Param: ${paramName}`)
     this.name = 'InvalidParamError'
-    this.message = paramName
+    this.error = paramName
   }
 }
